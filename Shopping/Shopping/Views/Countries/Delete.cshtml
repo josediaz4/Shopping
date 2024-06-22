@@ -8,16 +8,8 @@
 
 <h3>¿Está seguro de borrar el registro?</h3>
 <div>
-    <h4>País</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+    
+    <partial name="_countryDetails" />
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
