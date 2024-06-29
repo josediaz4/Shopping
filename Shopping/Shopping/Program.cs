@@ -13,7 +13,23 @@ builder.Services.AddDbContext<DataContext>(o =>
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
+//Inyectamos la Clase SeeDb 
+builder.Services.AddTransient<SeedDb>(); 
+
 var app = builder.Build();
+
+//Metodo para hacer la inyeccion manual!
+seedData();
+void seedData()
+{
+    IServiceScopeFactory? scopeFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (IServiceScope? scope = scopeFactory.CreateScope())
+    {
+        SeedDb? service = scope.ServiceProvider.GetService<SeedDb>();
+        service.SeedAsync().Wait();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
