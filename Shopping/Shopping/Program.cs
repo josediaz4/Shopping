@@ -25,6 +25,13 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
     cfg.Password.RequireUppercase = false;
 }).AddEntityFrameworkStores<DataContext>();
 
+//Si hay alguna anomalia en las direcciones de la pagina no redirecciona a la accion NotAuthorize del AccountController
+builder.Services.ConfigureApplicationCookie(options =>
+{
+	options.LoginPath = "/Account/NotAuthorized";
+	options.AccessDeniedPath = "/Account/NotAuthorized";
+});
+
 
 //Inyectamos la Clase SeeDb 
 builder.Services.AddTransient<SeedDb>();
@@ -53,6 +60,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+//nos muestra otro tipo de error por si hay alguna anomalia, se lo implementa en el HomeController
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
