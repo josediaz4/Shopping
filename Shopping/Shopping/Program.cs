@@ -33,9 +33,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 
-//Inyectamos la Clase SeeDb 
+//Inyectamos las Clases necesario 
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); //Esta linea se usa para no tener que estar lanzando el proyecto cada vez que se cambie alguna vista
 
 var app = builder.Build();
